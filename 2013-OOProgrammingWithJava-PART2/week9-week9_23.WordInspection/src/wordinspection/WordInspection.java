@@ -5,122 +5,120 @@
  */
 package wordinspection;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 /**
  *
- * @author ibz
+ * @author
  */
 public class WordInspection {
-    private Scanner reader;
-    private File file;
-    
+
+    private final File file;
+
     public WordInspection(File file) {
         this.file = file;
     }
-    
-    public int wordCount() {
-        String words = readFile();
-        System.out.println(words);
-        
-      return words.split("\\s+").length;
-    }
-    
-    public String readFile() {
-        try {
-            String str = "";
-            
-            Scanner reader = new Scanner(file, "UTf-8");
-            
-            while (reader.hasNextLine()) {
-                str += reader.nextLine();
-                str += "\n";
-            }
-            
-            return str;
-        } catch (FileNotFoundException e) {
-            
-            System.out.println("Does nothing");
-            return "";
-            
-        }
-    
-    }
-    
-    public List<String> wordsContainingZ() {
-        List<String> hold = new ArrayList<String>();
-        
-        String words = readFile();
-        String[] cWords = words.split("\\s+");
-        for (String word : cWords) {
-            if (word.contains("z")) {
-                hold.add(word);
-            }           
-        }
-        return hold;
-    }
-    
-    
-    
-    public List<String> palindromes() {
-        List<String> hold = new ArrayList<String>();
-        
-        String words = readFile();
-        String[] wordList = words.split("\\s");
-        for (String word : wordList) {
-            if (checkIfPalindrome(word) == true) {
-                hold.add(word);
-            }
-        }
-                
-   
-        return hold;
-    }
-    
-    private Boolean checkIfPalindrome(String word) {
-        String[] temp = word.split("");
-        int i1 = 0; int i2 = temp.length -1;
-        while (i1 < i2) {
-            if (!temp[i1].equals(temp[i2]) ) {
-                return false;
-            }
-            i1++;i2--;
-        }
-        return true;
-    }
-    
-    public List<String> wordsWhichContainAllVowels() {
-        List<String> contained = new ArrayList<String>();
-        String words = readFile();
-        String[] temp = words.split("\\s+");
-        
-        for (String word : temp) {
-            if (word.contains("a") && word.contains("e")
-                    && word.contains("i") && word.contains("o") && word.contains("u")
-                            && word.contains("y") && word.contains("ä") && word.contains("ö"))
-            {
-                contained.add(word);
-            }
-               
-            
-        }
-        return contained;
-    }
-    
-    public List<String> wordsEndingInL() {
-        List<String> hold = new ArrayList<String>();
-        
-        String words = readFile();
-        String[] cWords = words.split("\\s+");
-        for (String word : cWords) {
-            char lastChar = word.charAt(word.length()-1);
-            if (lastChar == 'l') {
-                hold.add(word);
-            }           
-        }
-        return hold;
-    }
-    
-    
-}
 
+    public int wordCount() throws FileNotFoundException {
+
+        Scanner r = readFile();
+        int count = 0;
+
+        while (r.hasNextLine()) {
+            String s = r.nextLine();
+            count++;
+        }
+        return count;
+    }
+
+    public List<String> wordsContainingZ() throws FileNotFoundException {
+
+        Scanner r = readFile();
+
+        List<String> wordZ = new ArrayList<String>();
+
+        while (r.hasNextLine()) {
+            String s = r.nextLine();
+            if (s.contains("z")) {
+                wordZ.add(s);
+            }
+            //return wordZ;
+        }
+        return wordZ;
+    }
+
+    public List<String> wordsEndingInL() throws FileNotFoundException {
+        Scanner r = readFile();
+        List<String> lastL = new ArrayList<String>();
+
+        while (r.hasNextLine()) {
+            String s = r.nextLine();
+            if (s.endsWith("l")) {
+                lastL.add(s);
+            }
+        }
+        return lastL;
+    }
+
+    public List<String> palindromes() {
+        Scanner r = readFile();
+        List<String> palindrome = new ArrayList<String>();
+
+        while (r.hasNextLine()) {
+            String s = r.nextLine();
+            String sReverse = reverse(s);
+
+            if (s.equalsIgnoreCase(sReverse)) {
+                palindrome.add(s);
+            }
+        }
+        return palindrome;
+    }
+
+    public List<String> wordsWhichContainAllVowels() {
+
+        //Finnish vowels - aeiouyäö
+        Scanner r = readFile();
+        List<String> wordVowel = new ArrayList<String>();
+
+        while (r.hasNextLine()) {
+            String s = r.nextLine();
+            if (s.contains("a") && s.contains("e") && s.contains("i")
+                    && s.contains("o") && s.contains("u") && s.contains("y")
+                    && s.contains("ä") && s.contains("ö")) {
+                wordVowel.add(s);
+            }
+        }
+        return wordVowel;
+    }
+
+    //this method reads the file and returns the content in it
+    private Scanner readFile() {
+        try {
+            Scanner reader = new Scanner(this.file, "UTF-8");
+            return reader;
+        } catch (FileNotFoundException ex) {
+            return null;
+        }
+    }
+
+    private String reverse(String s) {
+   
+        StringBuilder sb = new StringBuilder(s);
+        sb.reverse();
+        String rev = sb.toString();
+        return rev;
+        
+        /*String reverse = "";
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            reverse += s.charAt(length - i);
+        }
+        return reverse;*/
+    }
+}
+ 
