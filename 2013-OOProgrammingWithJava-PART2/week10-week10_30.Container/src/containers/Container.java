@@ -12,7 +12,7 @@ public class Container {
             this.capacity = 0.0;
         }
 
-        volume = 0.0;
+        this.volume = 0.0;
     }
 
 
