@@ -6,9 +6,13 @@ public class Thing {
     private int weight;
 
     public Thing(String name, int weight) {
-
-        this.name = name;
-        this.weight = weight;
+        if (weight < 0) {
+            throw new IllegalArgumentException();
+        } else {
+            this.name = name;
+            this.weight = weight;
+        }
+        
     }
 
     public Thing(String name) {
@@ -22,5 +26,24 @@ public class Thing {
     public int getWeight() {
         return weight;
     }
+    
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj.hashCode() == this.hashCode()) {
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 4;
+        hash = hash + this.name.hashCode();
+        return hash;
+    }
+    
+    
 
 }
