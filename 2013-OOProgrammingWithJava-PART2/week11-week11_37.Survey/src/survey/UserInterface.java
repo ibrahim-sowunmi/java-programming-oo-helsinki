@@ -56,11 +56,6 @@ public class UserInterface implements Runnable {
         
         container.add(new JButton("Done!"));
         
-        
-        
-        
-        
-        
     }
 
 
