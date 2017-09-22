@@ -22,16 +22,22 @@ public class GraphicCalculator implements Runnable {
         GridLayout layout = new GridLayout(3, 1);
         container.setLayout(layout);
         
-        JTextField calculatorOutput = new JTextField();
+        JTextField calculatorOutput = new JTextField("0");
         calculatorOutput.setEnabled(false);
         
-        JTextArea calculatorInput = new JTextArea();
+        JTextField calculatorInput = new JTextField("");
         
         JPanel panel = new JPanel(new GridLayout(1, 3));
         
         JButton plusButton = new JButton("+");
         JButton minusButton = new JButton("-");
         JButton zButton = new JButton("Z");
+        
+        CalculatorLogic logic = new CalculatorLogic();
+        
+        plusButton.addActionListener(new CalculatorListener(calculatorInput, calculatorOutput, plusButton, logic));
+        minusButton.addActionListener(new CalculatorListener(calculatorInput, calculatorOutput, minusButton, logic));
+        zButton.addActionListener(new CalculatorListener(calculatorInput, calculatorOutput, zButton, logic));
         
         panel.add(plusButton);
         panel.add(minusButton);
@@ -40,12 +46,6 @@ public class GraphicCalculator implements Runnable {
         container.add(calculatorOutput);
         container.add(calculatorInput);
         container.add(panel);
-        
-         CalculatorLogic logic = new CalculatorLogic();
-        
-        plusButton.addActionListener(new CalculatorListener(calculatorInput, calculatorOutput, plusButton, logic));
-        minusButton.addActionListener(new CalculatorListener(calculatorInput, calculatorOutput, minusButton, logic));
-        zButton.addActionListener(new CalculatorListener(calculatorInput, calculatorOutput, zButton, logic));
         
     }
 

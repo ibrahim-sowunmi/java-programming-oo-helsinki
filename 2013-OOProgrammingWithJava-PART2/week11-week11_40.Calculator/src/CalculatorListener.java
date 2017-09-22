@@ -13,12 +13,12 @@ import javax.swing.*;
  * @author ibz
  */
 public class CalculatorListener implements ActionListener {
-    private JTextArea input;
+    private JTextField input;
     private JTextField output;
     private JButton buttonOperation;
     private CalculatorLogic calculatorLogic;
     
-    public CalculatorListener(JTextArea input, JTextField output, JButton buttonOperation, CalculatorLogic calc) {
+    public CalculatorListener(JTextField input, JTextField output, JButton buttonOperation, CalculatorLogic calc) {
         this.input = input;
         this.output = output;
         this.buttonOperation = buttonOperation;
@@ -27,11 +27,13 @@ public class CalculatorListener implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+       
         calculatorLogic.setValue(Integer.parseInt(input.getText()));
         calculatorLogic.setOperation(buttonOperation.getText());
         calculatorLogic.calculate();
         this.output.setText(calculatorLogic.getStore());
+        this.input.setText("0");
+        
     }
     
 }

@@ -20,7 +20,7 @@ public class CalculatorLogic {
         if (operation.equals("-")) {
             store -= value;
         }
-        if (operation.equals("Z") && (store > 0)) {
+        if (operation.equals("Z")) {
             store = 0;
         }
         this.value = 0;
